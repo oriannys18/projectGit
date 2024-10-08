@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Accordion</title>
+    <link href="https://cdn.jsdelivr.net/npm/h8k-design@latest/dist/index.css" rel="stylesheet"/>
+    <link rel="shortcut icon" href="https://cdn.jsdelivr.net/npm/h8k-design@latest/dist/assets/favicon.ico">
+    <script src="https://cdn.jsdelivr.net/npm/h8k-components/dist/h8k-components/h8k-components.esm.js"
+            type="module"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/h8k-components/dist/h8k-components/h8k-components.js"></script>
+    <style>
+        /* Estilos adicionales para la tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        /* Escondemos las descripciones de las secciones del acordeón por defecto */
+        .description {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        /* Estilo para cuando el acordeón está abierto */
+        .description.show {
+            max-height: 500px; /* Ajusta este valor según el contenido */
+        }
+
+        .title-section {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #f1f1f1;
+            margin: 5px 0;
+            position: relative;
+        }
+
+        /* Flechita decorativa usando pseudo-elemento */
+        .title-section::before {
+            content: '\25BC'; /* Unicode de una flecha hacia abajo */
+            position: absolute;
+            right: 20px;
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        /* Rotar flecha cuando el acordeón está abierto */
+        .title-section.open::before {
+            transform: rotate(-180deg); /* Rota la flecha hacia arriba */
+        }
+
+        .accordion-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+<h8k-navbar header="Accordion"></h8k-navbar>
+
+<div class="w-50 mx-auto mt-40 position-relative">
+    <div>
+        <div class="multi-select">
+            <label>
+                <input type="checkbox" class="checkbox" id="multiselect" data-testid="multiselect"> Multiple
+            </label>
+        </div>
+
+        <div class="accordion-title">Places To Visit In Bangalore</div>
+
+        <div class="accordion" data-testid="1">
+            <div class="title-section">
+                <div class="title">Lalbagh Botanical Garden</div>
+            </div>
+            <div class="description">
+                Botanical garden with an aquarium & glasshouse designed to mimic London's former Crystal Palace.
+            </div>
+        </div>
+
+        <div class="accordion" data-testid="2">
+            <div class="title-section">
+                <div class="title">Cubbon Park</div>
+            </div>
+            <div class="description">
+                Established in 1870, this vibrant city park has walking paths, landscaped gardens & play areas.
+            </div>
+        </div>
+
+        <div class="accordion" data-testid="3">
+            <div class="title-section">
+                <div class="title">Bannerghatta Biological Park</div>
+            </div>
+            <div class="description">
+                Vast national reserve featuring a zoo, safari park, butterfly conservatory & animal rescue center.
+            </div>
+        </div>
+
+        <div class="accordion" data-testid="4">
+            <div class="title-section">
+                <div class="title">Dodda Alada Mara</div>
+            </div>
+            <div class="description">
+                Planted in the 17th century, this 400-year-old banyan tree covers 3 acres & is a popular photo spot.
+            </div>
+        </div>
+
+        <div class="accordion" data-testid="5">
+            <div class="title-section">
+                <div class="title">ISKCON Temple Bangalore</div>
+            </div>
+            <div class="description">
+                Expansive, modern Hare Krishna temple campus, including shrines, food stalls & souvenir shops.
+            </div>
+        </div>
+    </div>
+
+   
+
+    
+</div>
+
+<script>
+    // Seleccionar todos los acordeones
+    const accordions = document.querySelectorAll('.accordion');
+
+    accordions.forEach(accordion => {
+        const titleSection = accordion.querySelector('.title-section');
+        const description = accordion.querySelector('.description');
+
+        // Agregar un evento click para mostrar/ocultar el contenido
+        titleSection.addEventListener('click', () => {
+            const isVisible = description.classList.contains('show');
+            
+            // Si la descripción está visible, se colapsa
+            if (isVisible) {
+                description.style.maxHeight = description.scrollHeight + 'px'; // Asegura que obtenga el tamaño correcto
+                setTimeout(() => {
+                    description.style.maxHeight = '0';
+                }, 10);
+            } else {
+                description.style.maxHeight = description.scrollHeight + 'px';
+            }
+
+            // Mostrar u ocultar la descripción
+            description.classList.toggle('show');
+            
+            // Cambiar el estado de la flecha decorativa
+            titleSection.classList.toggle('open');
+        });
+    });
+</script>
+
+</body>
+
+<!-- HMR and test infrastructure - DO NOT EDIT -->
+<script src="./bundle.js"></script>
+
+</html>
