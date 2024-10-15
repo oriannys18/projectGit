@@ -8,7 +8,7 @@ const persona = {
     pais : ''
 }
 
-let personasArray = [];
+
 
 function processConctForm(e){
     
@@ -19,10 +19,9 @@ function processConctForm(e){
     persona.email = document.forms ["conctmortgage"]["correo"].value;
     persona.ciudad = document.forms ["conctmortgage"]["city"].value;
     persona.pais = document.forms ["conctmortgage"]["country"].value;
-    persona.id = personasArray.length;
+    persona.id = allStorge().length;
     let personajson = JSON.stringify(persona);
-    personasArray.push(personajson);
-
+    localStorage.setItem(persona.id, personajson);
     e.preventDefault();
     alert("Datos guardados con exito"+personasArray.toString());
 }
@@ -38,16 +37,20 @@ function listaconctactos(){
     dinamicTable += "<th>Apellidos</th>";
     dinamicTable += "<th>Telefonos</th>";
     dinamicTable += "<th>Email</th>";
+    dinamicTable += "<th>Accion</th>";
     dinamicTable += "</tr>";
     //filas cn la informacion
-    for (let i = 0; i < personasArray.length; i++) {
-        let personajson = JSON.parse(personasArray[i]);
+    let savePerson = allStorge();
+    for (let i = 0; i < savePerson.length; i++) {
+        dinamicTable += "<tr>";
+        let personajson = JSON.parse(savePerson[i]);
         dinamicTable += "<tr>";
         dinamicTable += "<td>"+personajson.id+"</td>";
         dinamicTable += "<td>"+personajson.nombres+"</td>";
         dinamicTable += "<td>"+personajson.apellidos+"</td>";
         dinamicTable += "<td>"+personajson.telefono+"</td>";
         dinamicTable += "<td>"+personajson.email+"</td>";
+        dinamicTable += "<td>'<a href=./detalles.html>Ver</a>'<td>";
         dinamicTable += "</tr>";
     }
    
@@ -56,6 +59,15 @@ function listaconctactos(){
     document.getElementById("tableconct").innerHTML = dinamicTable;
 }
 
+function allStorge(){
+    let values = [];
+     keys = Object.keys(localStorage),
+       i = keys.length;
+    while (i--) {
+        values.push(localStorage.getItem(keys[i]));
+    }
+    return values;
+}
 
   
    
